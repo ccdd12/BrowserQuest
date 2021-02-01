@@ -1,3 +1,5 @@
+[![Run on Repl.it](https://repl.it/badge/github/mozilla/BrowserQuest)](https://repl.it/github/mozilla/BrowserQuest)
+
 BrowserQuest
 ============
 
@@ -23,5 +25,3 @@ Created by [Little Workshop](http://www.littleworkshop.fr):
 
 * Franck Lecollinet - [@whatthefranck](http://twitter.com/whatthefranck)
 * Guillaume Lecollinet - [@glecollinet](http://twitter.com/glecollinet)
-
-[![Run on Repl.it](https://repl.it/badge/github/mozilla/BrowserQuest)](https://repl.it/github/mozilla/BrowserQuest)
