@@ -1776,7 +1776,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 _.each(items, function(i) {
                     if(Types.isExpendableItem(i.kind)) {
                         item = i;
-                    };
+                    }
                 });
 
                 // Else, get the first item of the stack

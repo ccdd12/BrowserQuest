@@ -3272,28 +3272,28 @@ var UNICODE = {
 
 function is_letter(ch) {
         return UNICODE.letter.test(ch);
-};
+}
 
 function is_digit(ch) {
         ch = ch.charCodeAt(0);
         return ch >= 48 && ch <= 57; //XXX: find out if "UnicodeDigit" means something else than 0..9
-};
+}
 
 function is_alphanumeric_char(ch) {
         return is_digit(ch) || is_letter(ch);
-};
+}
 
 function is_unicode_combining_mark(ch) {
         return UNICODE.non_spacing_mark.test(ch) || UNICODE.space_combining_mark.test(ch);
-};
+}
 
 function is_unicode_connector_punctuation(ch) {
         return UNICODE.connector_punctuation.test(ch);
-};
+}
 
 function is_identifier_start(ch) {
         return ch == "$" || ch == "_" || is_letter(ch);
-};
+}
 
 function is_identifier_char(ch) {
         return is_identifier_start(ch)
@@ -3303,7 +3303,7 @@ function is_identifier_char(ch) {
                 || ch == "\u200c" // zero-width non-joiner <ZWNJ>
                 || ch == "\u200d" // zero-width joiner <ZWJ> (in my ECMA-262 PDF, this is also 200c)
         ;
-};
+}
 
 function parse_js_number(num) {
         if (RE_HEX_NUMBER.test(num)) {
@@ -3313,7 +3313,7 @@ function parse_js_number(num) {
         } else if (RE_DEC_NUMBER.test(num)) {
                 return parseFloat(num);
         }
-};
+}
 
 function JS_Parse_Error(message, line, col, pos) {
         this.message = message;
@@ -3327,7 +3327,7 @@ function JS_Parse_Error(message, line, col, pos) {
                 this.stack = ex.stack;
         };
         */
-};
+}
 
 JS_Parse_Error.prototype.toString = function() {
         return this.message + " (line: " + this.line + ", col: " + this.col + ", pos: " + this.pos + ")" + "\n\n" + this.stack;
@@ -3335,11 +3335,11 @@ JS_Parse_Error.prototype.toString = function() {
 
 function js_error(message, line, col, pos) {
         throw new JS_Parse_Error(message, line, col, pos);
-};
+}
 
 function is_token(token, type, val) {
         return token.type == type && (val == null || token.value == val);
-};
+}
 
 var EX_EOF = {};
 
@@ -3358,7 +3358,7 @@ function tokenizer($TEXT) {
                 comments_before : []
         };
 
-        function peek() { return S.text.charAt(S.pos); };
+        function peek() { return S.text.charAt(S.pos); }
 
         function next(signal_eof) {
                 var ch = S.text.charAt(S.pos++);
@@ -3372,23 +3372,23 @@ function tokenizer($TEXT) {
                         ++S.col;
                 }
                 return ch;
-        };
+        }
 
         function eof() {
                 return !S.peek();
-        };
+        }
 
         function find(what, signal_eof) {
                 var pos = S.text.indexOf(what, S.pos);
                 if (signal_eof && pos == -1) throw EX_EOF;
                 return pos;
-        };
+        }
 
         function start_token() {
                 S.tokline = S.line;
                 S.tokcol = S.col;
                 S.tokpos = S.pos;
-        };
+        }
 
         function token(type, value, is_comment) {
                 S.regex_allowed = ((type == "operator" && !HOP(UNARY_POSTFIX, value)) ||
@@ -3408,12 +3408,12 @@ function tokenizer($TEXT) {
                 }
                 S.newline_before = false;
                 return ret;
-        };
+        }
 
         function skip_whitespace() {
                 while (HOP(WHITESPACE_CHARS, peek()))
                         next();
-        };
+        }
 
         function read_while(pred) {
                 var ret = "", ch = peek(), i = 0;
@@ -3422,11 +3422,11 @@ function tokenizer($TEXT) {
                         ch = peek();
                 }
                 return ret;
-        };
+        }
 
         function parse_error(err) {
                 js_error(err, S.tokline, S.tokcol, S.tokpos);
-        };
+        }
 
         function read_num(prefix) {
                 var has_e = false, after_e = false, has_x = false, has_dot = prefix == ".";
@@ -3460,7 +3460,7 @@ function tokenizer($TEXT) {
                 } else {
                         parse_error("Invalid syntax: " + num);
                 }
-        };
+        }
 
         function read_escaped_char() {
                 var ch = next(true);
@@ -3476,7 +3476,7 @@ function tokenizer($TEXT) {
                     case "u" : return String.fromCharCode(hex_bytes(4));
                     default  : return ch;
                 }
-        };
+        }
 
         function hex_bytes(n) {
                 var num = 0;
@@ -3487,7 +3487,7 @@ function tokenizer($TEXT) {
                         num = (num << 4) | digit;
                 }
                 return num;
-        };
+        }
 
         function read_string() {
                 return with_eof_error("Unterminated string constant", function(){
@@ -3517,7 +3517,7 @@ function tokenizer($TEXT) {
                         }
                         return token("string", ret);
                 });
-        };
+        }
 
         function read_line_comment() {
                 next();
@@ -3530,7 +3530,7 @@ function tokenizer($TEXT) {
                         S.pos = i;
                 }
                 return token("comment1", ret, true);
-        };
+        }
 
         function read_multiline_comment() {
                 next();
@@ -3551,7 +3551,7 @@ function tokenizer($TEXT) {
 
                         return tok;
                 });
-        };
+        }
 
         function read_name() {
                 var backslash = false, name = "", ch;
@@ -3570,7 +3570,7 @@ function tokenizer($TEXT) {
                         }
                 }
                 return name;
-        };
+        }
 
         function read_regexp() {
                 return with_eof_error("Unterminated regular expression", function(){
@@ -3594,7 +3594,7 @@ function tokenizer($TEXT) {
                         var mods = read_name();
                         return token("regexp", [ regexp, mods ]);
                 });
-        };
+        }
 
         function read_operator(prefix) {
                 function grow(op) {
@@ -3606,9 +3606,9 @@ function tokenizer($TEXT) {
                         } else {
                                 return op;
                         }
-                };
+                }
                 return token("operator", grow(prefix || next()));
-        };
+        }
 
         function handle_slash() {
                 next();
@@ -3624,14 +3624,14 @@ function tokenizer($TEXT) {
                         return next_token();
                 }
                 return S.regex_allowed ? read_regexp() : read_operator("/");
-        };
+        }
 
         function handle_dot() {
                 next();
                 return is_digit(peek())
                         ? read_num(".")
                         : token("punc", ".");
-        };
+        }
 
         function read_word() {
                 var word = read_name();
@@ -3642,7 +3642,7 @@ function tokenizer($TEXT) {
                         : HOP(KEYWORDS_ATOM, word)
                         ? token("atom", word)
                         : token("keyword", word);
-        };
+        }
 
         function with_eof_error(eof_error, cont) {
                 try {
@@ -3651,7 +3651,7 @@ function tokenizer($TEXT) {
                         if (ex === EX_EOF) parse_error(eof_error);
                         else throw ex;
                 }
-        };
+        }
 
         function next_token(force_regexp) {
                 if (force_regexp)
@@ -3668,7 +3668,7 @@ function tokenizer($TEXT) {
                 if (HOP(OPERATOR_CHARS, ch)) return read_operator();
                 if (ch == "\\" || is_identifier_start(ch)) return read_word();
                 parse_error("Unexpected character '" + ch + "'");
-        };
+        }
 
         next_token.context = function(nc) {
                 if (nc) S = nc;
@@ -3677,7 +3677,7 @@ function tokenizer($TEXT) {
 
         return next_token;
 
-};
+}
 
 /* -----[ Parser (constants) ]----- */
 
@@ -3741,7 +3741,7 @@ function NodeWithToken(str, start, end) {
         this.name = str;
         this.start = start;
         this.end = end;
-};
+}
 
 NodeWithToken.prototype.toString = function() { return this.name; };
 
@@ -3761,9 +3761,9 @@ function parse($TEXT, exigent_mode, embed_tokens) {
 
         function is(type, value) {
                 return is_token(S.token, type, value);
-        };
+        }
 
-        function peek() { return S.peeked || (S.peeked = S.input()); };
+        function peek() { return S.peeked || (S.peeked = S.input()); }
 
         function next() {
                 S.prev = S.token;
@@ -3774,11 +3774,11 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         S.token = S.input();
                 }
                 return S.token;
-        };
+        }
 
         function prev() {
                 return S.prev;
-        };
+        }
 
         function croak(msg, line, col, pos) {
                 var ctx = S.input.context();
@@ -3786,52 +3786,52 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                          line != null ? line : ctx.tokline,
                          col != null ? col : ctx.tokcol,
                          pos != null ? pos : ctx.tokpos);
-        };
+        }
 
         function token_error(token, msg) {
                 croak(msg, token.line, token.col);
-        };
+        }
 
         function unexpected(token) {
                 if (token == null)
                         token = S.token;
                 token_error(token, "Unexpected token: " + token.type + " (" + token.value + ")");
-        };
+        }
 
         function expect_token(type, val) {
                 if (is(type, val)) {
                         return next();
                 }
                 token_error(S.token, "Unexpected token " + S.token.type + ", expected " + type);
-        };
+        }
 
-        function expect(punc) { return expect_token("punc", punc); };
+        function expect(punc) { return expect_token("punc", punc); }
 
         function can_insert_semicolon() {
                 return !exigent_mode && (
                         S.token.nlb || is("eof") || is("punc", "}")
                 );
-        };
+        }
 
         function semicolon() {
                 if (is("punc", ";")) next();
                 else if (!can_insert_semicolon()) unexpected();
-        };
+        }
 
         function as() {
                 return slice(arguments);
-        };
+        }
 
         function parenthesised() {
                 expect("(");
                 var ex = expression();
                 expect(")");
                 return ex;
-        };
+        }
 
         function add_tokens(str, start, end) {
                 return str instanceof NodeWithToken ? str : new NodeWithToken(str, start, end);
-        };
+        }
 
         function maybe_embed_tokens(parser) {
                 if (embed_tokens) return function() {
@@ -3841,7 +3841,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         return ast;
                 };
                 else return parser;
-        };
+        }
 
         var statement = maybe_embed_tokens(function() {
                 if (is("operator", "/")) {
@@ -3946,11 +3946,11 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         unexpected(start);
                 S.labels.pop();
                 return as("label", label, stat);
-        };
+        }
 
         function simple_statement() {
                 return as("stat", prog1(expression, semicolon));
-        };
+        }
 
         function break_cont(type) {
                 var name;
@@ -3966,7 +3966,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         croak(type + " not inside a loop or switch");
                 semicolon();
                 return as(type, name);
-        };
+        }
 
         function for_() {
                 expect("(");
@@ -3979,7 +3979,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                                 return for_in(init);
                 }
                 return regular_for(init);
-        };
+        }
 
         function regular_for(init) {
                 expect(";");
@@ -3988,7 +3988,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 var step = is("punc", ")") ? null : expression();
                 expect(")");
                 return as("for", init, test, step, in_loop(statement));
-        };
+        }
 
         function for_in(init) {
                 var lhs = init[0] == "var" ? as("name", init[1][0]) : init;
@@ -3996,7 +3996,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 var obj = expression();
                 expect(")");
                 return as("for-in", init, lhs, obj, in_loop(statement));
-        };
+        }
 
         var function_ = maybe_embed_tokens(function(in_statement) {
                 var name = is("name") ? prog1(S.token.value, next) : null;
@@ -4035,7 +4035,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         belse = statement();
                 }
                 return as("if", cond, body, belse);
-        };
+        }
 
         function block_() {
                 expect("{");
@@ -4046,7 +4046,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 }
                 next();
                 return a;
-        };
+        }
 
         var switch_block_ = curry(in_loop, function(){
                 expect("{");
@@ -4093,7 +4093,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 if (!bcatch && !bfinally)
                         croak("Missing catch/finally blocks");
                 return as("try", body, bcatch, bfinally);
-        };
+        }
 
         function vardefs(no_in) {
                 var a = [];
@@ -4113,15 +4113,15 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         next();
                 }
                 return a;
-        };
+        }
 
         function var_(no_in) {
                 return as("var", vardefs(no_in));
-        };
+        }
 
         function const_() {
                 return as("const", vardefs());
-        };
+        }
 
         function new_() {
                 var newexp = expr_atom(false), args;
@@ -4132,7 +4132,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         args = [];
                 }
                 return subscripts(as("new", newexp, args), true);
-        };
+        }
 
         var expr_atom = maybe_embed_tokens(function(allow_calls) {
                 if (is("operator", "new")) {
@@ -4179,11 +4179,11 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 }
                 next();
                 return a;
-        };
+        }
 
         function array_() {
                 return as("array", expr_list("]", !exigent_mode, true));
-        };
+        }
 
         function object_() {
                 var first = true, a = [];
@@ -4203,7 +4203,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 }
                 next();
                 return as("object", a);
-        };
+        }
 
         function as_property_name() {
                 switch (S.token.type) {
@@ -4212,7 +4212,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         return prog1(S.token.value, next);
                 }
                 return as_name();
-        };
+        }
 
         function as_name() {
                 switch (S.token.type) {
@@ -4224,7 +4224,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                     default:
                         unexpected();
                 }
-        };
+        }
 
         function subscripts(expr, allow_calls) {
                 if (is("punc", ".")) {
@@ -4240,7 +4240,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         return subscripts(as("call", expr, expr_list(")")), true);
                 }
                 return expr;
-        };
+        }
 
         function maybe_unary(allow_calls) {
                 if (is("operator") && HOP(UNARY_PREFIX, S.token.value)) {
@@ -4254,13 +4254,13 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         next();
                 }
                 return val;
-        };
+        }
 
         function make_unary(tag, op, expr) {
                 if ((op == "++" || op == "--") && !is_assignable(expr))
                         croak("Invalid use of " + op + " operator");
                 return as(tag, op, expr);
-        };
+        }
 
         function expr_op(left, min_prec, no_in) {
                 var op = is("operator") ? S.token.value : null;
@@ -4272,11 +4272,11 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         return expr_op(as("binary", op, left, right), min_prec, no_in);
                 }
                 return left;
-        };
+        }
 
         function expr_ops(no_in) {
                 return expr_op(maybe_unary(true), 0, no_in);
-        };
+        }
 
         function maybe_conditional(no_in) {
                 var expr = expr_ops(no_in);
@@ -4287,7 +4287,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         return as("conditional", expr, yes, expression(false, no_in));
                 }
                 return expr;
-        };
+        }
 
         function is_assignable(expr) {
                 if (!exigent_mode) return true;
@@ -4300,7 +4300,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                     case "name":
                         return expr[1] != "this";
                 }
-        };
+        }
 
         function maybe_assign(no_in) {
                 var left = maybe_conditional(no_in), val = S.token.value;
@@ -4312,7 +4312,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                         croak("Invalid assignment");
                 }
                 return left;
-        };
+        }
 
         var expression = maybe_embed_tokens(function(commas, no_in) {
                 if (arguments.length == 0)
@@ -4332,7 +4332,7 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 } finally {
                         --S.in_loop;
                 }
-        };
+        }
 
         return as("toplevel", (function(a){
                 while (!is("eof"))
@@ -4340,14 +4340,14 @@ function parse($TEXT, exigent_mode, embed_tokens) {
                 return a;
         })([]));
 
-};
+}
 
 /* -----[ Utilities ]----- */
 
 function curry(f) {
         var args = slice(arguments, 1);
         return function() { return f.apply(this, args.concat(slice(arguments))); };
-};
+}
 
 function prog1(ret) {
         if (ret instanceof Function)
@@ -4355,33 +4355,33 @@ function prog1(ret) {
         for (var i = 1, n = arguments.length; --n > 0; ++i)
                 arguments[i]();
         return ret;
-};
+}
 
 function array_to_hash(a) {
         var ret = {};
         for (var i = 0; i < a.length; ++i)
                 ret[a[i]] = true;
         return ret;
-};
+}
 
 function slice(a, start) {
         return Array.prototype.slice.call(a, start == null ? 0 : start);
-};
+}
 
 function characters(str) {
         return str.split("");
-};
+}
 
 function member(name, array) {
         for (var i = array.length; --i >= 0;)
                 if (array[i] === name)
                         return true;
         return false;
-};
+}
 
 function HOP(obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
-};
+}
 
 var warn = function() {};
 
@@ -4427,7 +4427,7 @@ function ast_squeeze_more(ast) {
         }, function() {
                 return walk(ast);
         });
-};
+}
 
 exports.ast_squeeze_more = ast_squeeze_more;
 
@@ -4509,13 +4509,13 @@ function ast_walker(ast) {
                                 a[1] = walk(def[1]);
                         return a;
                 }) ];
-        };
+        }
         function _block(statements) {
                 var out = [ this[0] ];
                 if (statements != null)
                         out.push(MAP(statements, walk));
                 return out;
-        };
+        }
         var walkers = {
                 "string": function(str) {
                         return [ this[0], str ];
@@ -4656,7 +4656,7 @@ function ast_walker(ast) {
                 } finally {
                         stack.pop();
                 }
-        };
+        }
 
         function with_walkers(walkers, cont){
                 var save = {}, i;
@@ -4670,7 +4670,7 @@ function ast_walker(ast) {
                         else user[i] = save[i];
                 }
                 return ret;
-        };
+        }
 
         return {
                 walk: walk,
@@ -4682,7 +4682,7 @@ function ast_walker(ast) {
                         return stack;
                 }
         };
-};
+}
 
 /* -----[ Scope and mangling ]----- */
 
@@ -4702,7 +4702,7 @@ function Scope(parent) {
         } else {
                 this.level = 0;
         }
-};
+}
 
 var base54 = (function(){
         var DIGITS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_";
@@ -4804,15 +4804,15 @@ function ast_add_scope(ast) {
                 ret.scope = current_scope;
                 current_scope = current_scope.parent;
                 return ret;
-        };
+        }
 
         function define(name) {
                 return current_scope.define(name);
-        };
+        }
 
         function reference(name) {
                 current_scope.refs[name] = true;
-        };
+        }
 
         function _lambda(name, args, body) {
                 var is_defun = this[0] == "defun";
@@ -4821,7 +4821,7 @@ function ast_add_scope(ast) {
                         MAP(args, define);
                         return MAP(body, walk);
                 })];
-        };
+        }
 
         return with_new_scope(function(){
                 // process AST
@@ -4882,13 +4882,13 @@ function ast_add_scope(ast) {
                                         if (s === origin) break;
                                 }
                         }
-                };
+                }
                 fixrefs(current_scope);
 
                 return ret;
         });
 
-};
+}
 
 /* -----[ mangle names ]----- */
 
@@ -4901,7 +4901,7 @@ function ast_mangle(ast, options) {
                 if (options.except && member(name, options.except))
                         return name;
                 return scope.get_mangled(name, newMangle);
-        };
+        }
 
         function get_define(name) {
                 if (options.defines) {
@@ -4914,7 +4914,7 @@ function ast_mangle(ast, options) {
                         }
                         return null;
                 }
-        };
+        }
 
         function _lambda(name, args, body) {
                 var is_defun = this[0] == "defun", extra;
@@ -4933,7 +4933,7 @@ function ast_mangle(ast, options) {
                         return MAP(body, walk);
                 }, extra);
                 return [ this[0], name, args, body ];
-        };
+        }
 
         function with_scope(s, cont, extra) {
                 var _scope = scope;
@@ -4948,13 +4948,13 @@ function ast_mangle(ast, options) {
                 ret.scope = s;
                 scope = _scope;
                 return ret;
-        };
+        }
 
         function _vardefs(defs) {
                 return [ this[0], MAP(defs, function(d){
                         return [ get_mangled(d[0]), walk(d[1]) ];
                 }) ];
-        };
+        }
 
         return w.with_walkers({
                 "function": _lambda,
@@ -4990,7 +4990,7 @@ function ast_mangle(ast, options) {
         }, function() {
                 return walk(ast_add_scope(ast));
         });
-};
+}
 
 /* -----[
    - compress foo["bar"] into foo.bar,
@@ -5007,7 +5007,7 @@ var warn = function(){};
 
 function best_of(ast1, ast2) {
         return gen_code(ast1).length > gen_code(ast2[0] == "stat" ? ast2[1] : ast2).length ? ast2 : ast1;
-};
+}
 
 function last_stat(b) {
         if (b[0] == "block" && b[1] && b[1].length > 0)
@@ -5021,7 +5021,7 @@ function aborts(t) {
                 if (t[0] == "return" || t[0] == "break" || t[0] == "continue" || t[0] == "throw")
                         return true;
         }
-};
+}
 
 function boolean_expr(expr) {
         return ( (expr[0] == "unary-prefix"
@@ -5046,7 +5046,7 @@ function boolean_expr(expr) {
                  (expr[0] == "seq"
                   && boolean_expr(expr[expr.length - 1]))
                );
-};
+}
 
 function make_conditional(c, t, e) {
     var make_real_conditional = function() {
@@ -5061,18 +5061,18 @@ function make_conditional(c, t, e) {
         warn_unreachable(val ? e : t);
         return          (val ? t : e);
     }, make_real_conditional);
-};
+}
 
 function empty(b) {
         return !b || (b[0] == "block" && (!b[1] || b[1].length == 0));
-};
+}
 
 function is_string(node) {
         return (node[0] == "string" ||
                 node[0] == "unary-prefix" && node[1] == "typeof" ||
                 node[0] == "binary" && node[1] == "+" &&
                 (is_string(node[2]) || is_string(node[3])));
-};
+}
 
 var when_constant = (function(){
 
@@ -5129,7 +5129,7 @@ var when_constant = (function(){
                         }
                 }
                 throw $NOT_CONSTANT;
-        };
+        }
 
         return function(expr, yes, no) {
                 try {
@@ -5172,7 +5172,7 @@ var when_constant = (function(){
 function warn_unreachable(ast) {
         if (!empty(ast))
                 warn("Dropping unreachable code: " + gen_code(ast, true));
-};
+}
 
 function prepare_ifs(ast) {
         var w = ast_walker(), walk = w.walk;
@@ -5223,19 +5223,19 @@ function prepare_ifs(ast) {
                 }
 
                 return statements;
-        };
+        }
 
         function redo_if_lambda(name, args, body) {
                 body = redo_if(body);
                 return [ this[0], name, args.slice(), body ];
-        };
+        }
 
         function redo_if_block(statements) {
                 var out = [ this[0] ];
                 if (statements != null)
                         out.push(redo_if(statements));
                 return out;
-        };
+        }
 
         return w.with_walkers({
                 "defun": redo_if_lambda,
@@ -5256,7 +5256,7 @@ function prepare_ifs(ast) {
         }, function() {
                 return walk(ast);
         });
-};
+}
 
 function ast_squeeze(ast, options) {
         options = defaults(options, {
@@ -5298,7 +5298,7 @@ function ast_squeeze(ast, options) {
                         break;
                 }
                 return not_c;
-        };
+        }
 
         function with_scope(s, cont) {
                 var _scope = scope;
@@ -5307,7 +5307,7 @@ function ast_squeeze(ast, options) {
                 ret.scope = s;
                 scope = _scope;
                 return ret;
-        };
+        }
 
         function rmblock(block) {
                 if (block != null && block[0] == "block" && block[1]) {
@@ -5317,7 +5317,7 @@ function ast_squeeze(ast, options) {
                                 block = [ "block" ];
                 }
                 return block;
-        };
+        }
 
         function _lambda(name, args, body) {
                 var is_defun = this[0] == "defun";
@@ -5328,7 +5328,7 @@ function ast_squeeze(ast, options) {
                         return ret;
                 });
                 return [ this[0], name, args, body ];
-        };
+        }
 
         // we get here for blocks that have been already transformed.
         // this function does a few things:
@@ -5412,7 +5412,7 @@ function ast_squeeze(ast, options) {
                 })(0, []);
 
                 return statements;
-        };
+        }
 
         function make_if(c, t, e) {
                 return when_constant(c, function(ast, val){
@@ -5426,7 +5426,7 @@ function ast_squeeze(ast, options) {
                 }, function() {
                         return make_real_if(c, t, e);
                 });
-        };
+        }
 
         function make_real_if(c, t, e) {
                 c = walk(c);
@@ -5492,7 +5492,7 @@ function ast_squeeze(ast, options) {
                         ret = walk([ "block", ret ]);
                 }
                 return ret;
-        };
+        }
 
         function _do_while(cond, body) {
                 return when_constant(cond, function(cond, val){
@@ -5503,7 +5503,7 @@ function ast_squeeze(ast, options) {
                                 return [ "for", null, null, null, walk(body) ];
                         }
                 });
-        };
+        }
 
         ast = prepare_ifs(ast);
         ast = ast_add_scope(ast);
@@ -5592,7 +5592,7 @@ function ast_squeeze(ast, options) {
         }, function() {
                 return walk(ast);
         });
-};
+}
 
 /* -----[ re-generate code from the AST ]----- */
 
@@ -5627,7 +5627,7 @@ function make_string(str, ascii_only) {
         if (ascii_only) str = to_ascii(str);
         if (dq > sq) return "'" + str.replace(/\x27/g, "\\'") + "'";
         else return '"' + str.replace(/\x22/g, '\\"') + '"';
-};
+}
 
 function to_ascii(str) {
         return str.replace(/[\u0080-\uffff]/g, function(ch) {
@@ -5635,7 +5635,7 @@ function to_ascii(str) {
                 while (code.length < 4) code = "0" + code;
                 return "\\u" + code;
         });
-};
+}
 
 var SPLICE_NEEDS_BRACKETS = jsp.array_to_hash([ "if", "while", "do", "for", "for-in", "with" ]);
 
@@ -5659,14 +5659,14 @@ function gen_code(ast, options) {
                 if (options.inline_script)
                         ret = ret.replace(/<\x2fscript([>/\t\n\f\r ])/gi, "<\\/script$1");
                 return ret;
-        };
+        }
 
         function make_name(name) {
                 name = name.toString();
                 if (options.ascii_only)
                         name = to_ascii(name);
                 return name;
-        };
+        }
 
         function indent(line) {
                 if (line == null)
@@ -5674,14 +5674,14 @@ function gen_code(ast, options) {
                 if (beautify)
                         line = repeat_string(" ", options.indent_start + indentation * options.indent_level) + line;
                 return line;
-        };
+        }
 
         function with_indent(cont, incr) {
                 if (incr == null) incr = 1;
                 indentation += incr;
                 try { return cont.apply(null, slice(arguments, 1)); }
                 finally { indentation -= incr; }
-        };
+        }
 
         function add_spaces(a) {
                 if (beautify)
@@ -5697,11 +5697,11 @@ function gen_code(ast, options) {
                         }
                 }
                 return b.join("");
-        };
+        }
 
         function add_commas(a) {
                 return a.join("," + space);
-        };
+        }
 
         function parenthesize(expr) {
                 var gen = make(expr);
@@ -5711,7 +5711,7 @@ function gen_code(ast, options) {
                                 return "(" + gen + ")";
                 }
                 return gen;
-        };
+        }
 
         function best_of(a) {
                 if (a.length == 1) {
@@ -5723,7 +5723,7 @@ function gen_code(ast, options) {
                         return a.length <= b.length ? a : b;
                 }
                 return best_of([ a[0], best_of(a.slice(1)) ]);
-        };
+        }
 
         function needs_parens(expr) {
                 if (expr[0] == "function" || expr[0] == "object") {
@@ -5748,7 +5748,7 @@ function gen_code(ast, options) {
                         }
                 }
                 return !HOP(DOT_CALL_NO_PARENS, expr[0]);
-        };
+        }
 
         function make_num(num) {
                 var str = num.toString(10), a = [ str.replace(/^0\./, ".") ], m;
@@ -5763,7 +5763,7 @@ function gen_code(ast, options) {
                                str.substr(str.indexOf(".")));
                 }
                 return best_of(a);
-        };
+        }
 
         var generators = {
                 "string": encode_string,
@@ -6019,7 +6019,7 @@ function gen_code(ast, options) {
                         else break;
                 }
                 return make(th);
-        };
+        }
 
         function make_function(name, args, body, keyword) {
                 var out = keyword || "function";
@@ -6028,7 +6028,7 @@ function gen_code(ast, options) {
                 }
                 out += "(" + add_commas(MAP(args, make_name)) + ")";
                 return add_spaces([ out, make_block(body) ]);
-        };
+        }
 
         function make_block_statements(statements, noindent) {
                 for (var a = [], last = statements.length - 1, i = 0; i <= last; ++i) {
@@ -6049,7 +6049,7 @@ function gen_code(ast, options) {
                         }
                 }
                 return noindent ? a : MAP(a, indent);
-        };
+        }
 
         function make_switch_block(body) {
                 var n = body.length;
@@ -6066,7 +6066,7 @@ function gen_code(ast, options) {
                                 code += ";";
                         return code;
                 }).join(newline) + newline + indent("}");
-        };
+        }
 
         function make_block(statements) {
                 if (!statements) return ";";
@@ -6074,14 +6074,14 @@ function gen_code(ast, options) {
                 return "{" + newline + with_indent(function(){
                         return make_block_statements(statements).join(newline);
                 }) + newline + indent("}");
-        };
+        }
 
         function make_1vardef(def) {
                 var name = def[0], val = def[1];
                 if (val != null)
                         name = add_spaces([ make_name(name), "=", parenthesize(val, "seq") ]);
                 return name;
-        };
+        }
 
         var $stack = [];
 
@@ -6094,10 +6094,10 @@ function gen_code(ast, options) {
                 var ret = gen.apply(type, node.slice(1));
                 $stack.pop();
                 return ret;
-        };
+        }
 
         return make(ast);
-};
+}
 
 function split_lines(code, max_line_length) {
         var splits = [ 0 ];
@@ -6107,11 +6107,11 @@ function split_lines(code, max_line_length) {
                 var prev_token;
                 function current_length(tok) {
                         return tok.pos - last_split;
-                };
+                }
                 function split_here(tok) {
                         last_split = tok.pos;
                         splits.push(last_split);
-                };
+                }
                 function custom(){
                         var tok = next_token.apply(this, arguments);
                         out: {
@@ -6131,7 +6131,7 @@ function split_lines(code, max_line_length) {
                         }
                         prev_token = tok;
                         return tok;
-                };
+                }
                 custom.context = function() {
                         return next_token.context.apply(this, arguments);
                 };
@@ -6140,7 +6140,7 @@ function split_lines(code, max_line_length) {
         return splits.map(function(pos, i){
                 return code.substring(pos, splits[i + 1] || code.length);
         }).join("\n");
-};
+}
 
 /* -----[ Utilities ]----- */
 
@@ -6151,7 +6151,7 @@ function repeat_string(str, i) {
         d += d;
         if (i & 1) d += str;
         return d;
-};
+}
 
 function defaults(args, defs) {
         var ret = {};
@@ -6161,7 +6161,7 @@ function defaults(args, defs) {
                 ret[i] = (args && HOP(args, i)) ? args[i] : defs[i];
         }
         return ret;
-};
+}
 
 function is_identifier(name) {
         return /^[a-z_$][a-z0-9_$]*$/i.test(name)
@@ -6169,11 +6169,11 @@ function is_identifier(name) {
                 && !HOP(jsp.KEYWORDS_ATOM, name)
                 && !HOP(jsp.RESERVED_WORDS, name)
                 && !HOP(jsp.KEYWORDS, name);
-};
+}
 
 function HOP(obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
-};
+}
 
 // some utilities
 
@@ -6190,7 +6190,7 @@ var MAP;
                 return ret;
         };
         MAP.at_top = function(val) { return new AtTop(val) };
-        function AtTop(val) { this.v = val };
+        function AtTop(val) { this.v = val }
 })();
 
 /* -----[ Exports ]----- */
@@ -6223,7 +6223,7 @@ function uglify(orig_code, options){
   ast = pro.ast_squeeze(ast, options.squeeze_options); // get an AST with compression optimizations
   var final_code = pro.gen_code(ast, options.gen_options); // compressed code here
   return final_code;
-};
+}
 
 uglify.parser = require("./parse-js");
 uglify.uglify = require("./process");
