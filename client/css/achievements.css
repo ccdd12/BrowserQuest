@@ -32,14 +32,14 @@
     #achievements ul {float:left;margin-left:60px;}
     #achievements nav {height:66px;width:202px;margin:0 auto;}
     #previous, #next {height:66px;width:102px;display:inline-block;}
-    .page1 #previous, .upscaled .page1 #previous {background-position:0px -846px;}
+    .page1 #previous, .upscaled .page1 #previous {background-position:0 -846px;}
     .page5 #next, .upscaled .page5 #next {background-position:-99px -846px;}
     #previous, .upscaled #previous {background-position:-201px -846px;}
     #previous:active, .upscaled #previous:active {background-position:-402px -846px;}
     #next, .upscaled #next {margin-left:-15px;background-position:-300px -846px;}
     #next:active, .upscaled #next:active {background-position:-501px -846px;}
 
-    .page1 #previous:hover, .page1 #previous:active {background-position:0px -846px;}
+    .page1 #previous:hover, .page1 #previous:active {background-position:0 -846px;}
     .page5 #next:hover, .page5 #next:active {background-position:-99px -846px}
     
     #lists {width:6000px;}
@@ -67,7 +67,7 @@
     #achievement-notification .coin {position:absolute;top:-60px;left:50%;margin-left:-36px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
     #achievement-notification.active #coinsparks, .upscaled #achievement-notification.active #coinsparks {height:78px;width:72px;-moz-animation:coinsparks3 0.8s steps(6, end) 7;-webkit-animation:coinsparks3 0.8s steps(6, end) 7;-o-animation:coinsparks3 0.8s steps(6, end) 7;-ms-animation:coinsparks3 0.8s steps(6, end) 7;}
-    #achievement-notification .title {color:#fce045;font-size:20px;margin:27px 0 9px 0;}
+    #achievement-notification .title {color:#fce045;font-size:20px;margin:27px 0 9px;}
     #achievement-notification .name {color:#eee;font-size:30px;margin:9px 0;}
 }
 
@@ -98,14 +98,14 @@
     #achievements ul {float:left;margin-left:40px;}
     #achievements nav {height:44px;width:134px;margin:0 auto;}
     #previous, #next {height:44px;width:68px;display:inline-block;}
-    .page1 #previous, .upscaled .page1 #previous {background-position:0px -564px;}
+    .page1 #previous, .upscaled .page1 #previous {background-position:0 -564px;}
     .page5 #next, .upscaled .page5 #next {background-position:-66px -564px;}
     #previous, .upscaled #previous {background-position:-134px -564px;}
     #previous:active, .upscaled #previous:active {background-position:-268px -564px;}
     #next, .upscaled #next {margin-left:-10px;background-position:-200px -564px;}
     #next:active, .upscaled #next:active {background-position:-334px -564px;}
     
-    .page1 #previous:hover, .page1 #previous:active {background-position:0px -564px;}
+    .page1 #previous:hover, .page1 #previous:active {background-position:0 -564px;}
     .page5 #next:hover, .page5 #next:active {background-position:-66px -564px}
     
     #lists {width:4000px;}
@@ -133,7 +133,7 @@
     #achievement-notification .coin {position:absolute;top:-40px;left:50%;margin-left:-24px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
     #achievement-notification.active #coinsparks, .upscaled #achievement-notification.active #coinsparks {height:52px;width:48px;-moz-animation:coinsparks2 0.8s steps(6, end) 7;-webkit-animation:coinsparks2 0.8s steps(6, end) 7;-o-animation:coinsparks2 0.8s steps(6, end) 7;-ms-animation:coinsparks2 0.8s steps(6, end) 7;}
-    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px 0;}
+    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px;}
     #achievement-notification .name {color:#eee;font-size:20px;margin:6px 0;}
 }
 
@@ -164,14 +164,14 @@
     #achievements ul {float:left;margin-left:40px;}
     #achievements nav {height:44px;width:135px;margin:0 auto;}
     #previous, #next {height:44px;width:68px;display:inline-block;}
-    .page1 #previous, .upscaled .page1 #previous {background-position:0px -564px;}
+    .page1 #previous, .upscaled .page1 #previous {background-position:0 -564px;}
     .page5 #next, .upscaled .page5 #next {background-position:-66px -564px;}
     #previous, .upscaled #previous {background-position:-134px -564px;}
     #previous:active, .upscaled #previous:active {background-position:-268px -564px;}
     #next, .upscaled #next {margin-left:-10px;background-position:-200px -564px;}
     #next:active, .upscaled #next:active {background-position:-334px -564px;}
     
-    .page1 #previous:hover, .page1 #previous:active {background-position:0px -564px;}
+    .page1 #previous:hover, .page1 #previous:active {background-position:0 -564px;}
     .page5 #next:hover, .page5 #next:active {background-position:-66px -564px}
     
     #lists {width:4000px;}
@@ -199,7 +199,7 @@
     #achievement-notification .coin {position:absolute;top:-40px;left:50%;margin-left:-24px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
     #achievement-notification.active #coinsparks, .upscaled #achievement-notification.active #coinsparks {height:52px;width:48px;-moz-animation:coinsparks2 0.8s steps(6, end) 7;-webkit-animation:coinsparks2 0.8s steps(6, end) 7;-o-animation:coinsparks2 0.8s steps(6, end) 7;-ms-animation:coinsparks2 0.8s steps(6, end) 7;}
-    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px 0;}
+    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px;}
     #achievement-notification .name {color:#eee;font-size:20px;margin:6px 0;}
 }
 
@@ -230,14 +230,14 @@
     #achievements ul {float:left;margin-left:20px;}
     #achievements nav {height:22px;width:68px;margin:0 auto;}
     #previous, #next {height:22px;width:34px;display:inline-block;}
-    .page1 #previous, .upscaled .page1 #previous {background-position:0px -282px;}
+    .page1 #previous, .upscaled .page1 #previous {background-position:0 -282px;}
     .page5 #next, .upscaled .page5 #next {background-position:-33px -282px;}
     #previous, .upscaled #previous {background-position:-67px -282px;}
     #previous:active, .upscaled #previous:active {background-position:-134px -282px;}
     #next, .upscaled #next {margin-left:-5px;background-position:-100px -282px;}
     #next:active, .upscaled #next:active {background-position:-167px -282px;}
     
-    .page1 #previous:hover, .page1 #previous:active {background-position:0px -282px;}
+    .page1 #previous:hover, .page1 #previous:active {background-position:0 -282px;}
     .page5 #next:hover, .page5 #next:active {background-position:-33px -282px}
     
     #lists {width:2000px;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
@@ -265,7 +265,7 @@
     #achievement-notification .coin {position:absolute;top:-20px;left:50%;margin-left:-12px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
     #achievement-notification.active #coinsparks, .upscaled #achievement-notification.active #coinsparks {height:26px;width:24px;-moz-animation:coinsparks1 0.8s steps(6, end) 7;-webkit-animation:coinsparks1 0.8s steps(6, end) 7;-o-animation:coinsparks1 0.8s steps(6, end) 7;-ms-animation:coinsparks1 0.8s steps(6, end) 7;}
-    #achievement-notification .title {color:#fce045;font-size:10px;margin:9px 0 3px 0;}
+    #achievement-notification .title {color:#fce045;font-size:10px;margin:9px 0 3px;}
     #achievement-notification .name {color:#eee;font-size:10px;margin:3px 0;}
 }
 
@@ -294,14 +294,14 @@
     
     #achievements nav {height:22px;width:68px;margin:0 auto;}
     #previous, #next {height:22px;width:34px;display:inline-block;}
-    .page1 #previous, .upscaled .page1 #previous {background-position:0px -282px;}
+    .page1 #previous, .upscaled .page1 #previous {background-position:0 -282px;}
     .page5 #next, .upscaled .page5 #next {background-position:-33px -282px;}
     #previous, .upscaled #previous {background-position:-67px -282px;}
     #previous:active, .upscaled #previous:active {background-position:-134px -282px;}
     #next, .upscaled #next {margin-left:-5px;background-position:-100px -282px;}
     #next:active, .upscaled #next:active {background-position:-167px -282px;}
     
-    .page1 #previous:hover, .page1 #previous:active {background-position:0px -282px;}
+    .page1 #previous:hover, .page1 #previous:active {background-position:0 -282px;}
     .page5 #next:hover, .page5 #next:active {background-position:-33px -282px}
     
     #lists {width:2000px;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
@@ -319,7 +319,7 @@
     #achievement-notification .coin {position:absolute;top:-40px;left:50%;margin-left:-24px;opacity:0;}
     #achievement-notification.active .coin {opacity:1;}
     #achievement-notification.active #coinsparks {display:none;}
-    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px 0;}
+    #achievement-notification .title {color:#fce045;font-size:14px;margin:18px 0 6px;}
     #achievement-notification .name {color:#eee;font-size:20px;margin:6px 0;}
     
     #achievements li.unlocked .achievement-sharing {display:block;}

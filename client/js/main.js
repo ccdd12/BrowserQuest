@@ -93,7 +93,7 @@ define(['jquery', 'app'], function($, App) {
         	        } else {
                         $(this).text('Privacy');
         	        }
-        	    };
+        	    }
         	});
 	
         	$('#create-new span').click(function() {
